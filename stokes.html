@@ -1,0 +1,2641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stokes Automation // Cosmic Systems Control</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Stokes Automation: Architecting telemetry, robotics, and cybernetic automation grids for orbital, lunar, and deep-space operations. NASA-inspired glassmorphic telemetry console.">
+  <meta name="keywords" content="space automation, glassmorphism web design, minimalist tech, robotics, space-grade telemetry, orbital logistics">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Colors */
+      --bg-color: #07070a;
+      --text-main: #f4f4f6;
+      --text-muted: #8a8d9b;
+      
+      /* Glassmorphism Configuration */
+      --glass-bg: rgba(15, 17, 26, 0.45);
+      --glass-bg-hover: rgba(25, 28, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-focus: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+      --border-radius: 16px;
+      
+      /* Subdued Cosmic Accents */
+      --accent-orange: #ffa726; /* Sunset Orange */
+      --accent-green: #2ecc71;  /* Soft Green */
+      --accent-cyan: #00d2ff;   /* Electric Cyan */
+      --accent-yellow: #ffca28; /* Soft Yellow */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(255, 167, 38, 0.03) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+      min-height: 100vh;
+    }
+
+    /* Monospace Utility for Telemetry & Terminal */
+    .mono-font {
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+      border-left: 1px solid var(--glass-border);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      border: 2px solid var(--bg-color);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- ALERT MARQUEE BANNER --- */
+    .alert-banner {
+      background-color: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 8px 0;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    
+    .marquee-text {
+      display: inline-block;
+      animation: marquee 25s linear infinite;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* --- HEADER (translucent navbar) --- */
+    header {
+      border-bottom: 1px solid var(--glass-border);
+      background-color: rgba(7, 7, 9, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: all 0.3s ease;
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-orange));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #000;
+      box-shadow: 0 4px 12px rgba(0, 210, 255, 0.2);
+    }
+
+    .brand-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      color: var(--accent-orange);
+      display: block;
+      margin-top: -1px;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      color: var(--text-muted);
+      padding: 6px 16px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--glass-border);
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+    }
+
+    .status-item {
+      padding: 6px 14px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-green);
+      margin-right: 8px;
+      box-shadow: 0 0 10px var(--accent-green);
+      animation: blink 2s infinite ease-in-out;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* --- HERO --- */
+    .hero-section {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .agency-tag {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      align-self: flex-start;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      line-height: 1.15;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .btn-brutal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      background: var(--accent-orange);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      color: #000;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 167, 38, 0.15);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-decoration: none;
+    }
+
+    .btn-brutal:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 167, 38, 0.3);
+      filter: brightness(1.08);
+    }
+
+    .btn-brutal:active {
+      transform: translateY(1px);
+    }
+
+    .btn-brutal.secondary {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border: 1px solid var(--glass-border);
+      box-shadow: none;
+    }
+
+    .btn-brutal.secondary:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--glass-border-focus);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.02);
+    }
+
+    .hero-visualizer {
+      height: 380px;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .visualizer-overlay {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      pointer-events: none;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      z-index: 10;
+      line-height: 1.5;
+    }
+
+    .visualizer-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* --- CONTROL ROOM --- */
+    .dashboard-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title::before {
+      content: '// ';
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.3fr 1.8fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-section {
+        grid-template-columns: 1fr;
+        padding: 50px 0;
+      }
+    }
+
+    .brutal-panel {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .panel-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      background-color: rgba(255, 255, 255, 0.02);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+
+    .panel-header-badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .panel-body {
+      padding: 24px;
+      flex-grow: 1;
+    }
+
+    .node-control {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .node-item {
+      padding: 14px 18px;
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.01);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .node-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--glass-border-focus);
+      transform: translateY(-1px);
+    }
+
+    .node-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .node-name {
+      font-weight: 500;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .node-type {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .node-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .node-status-lbl {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .node-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .node-status-dot.offline {
+      background-color: var(--text-muted);
+      box-shadow: none;
+    }
+
+    .node-status-dot.warning {
+      background-color: var(--accent-yellow);
+      box-shadow: 0 0 10px var(--accent-yellow);
+    }
+
+    /* Custom Switch Container */
+    .switch-container {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 22px;
+    }
+    
+    .switch-container input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 34px;
+      transition: .3s;
+    }
+    
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--text-main);
+      border-radius: 50%;
+      transition: .3s;
+    }
+    
+    input:checked + .switch-slider {
+      background-color: rgba(0, 210, 255, 0.1);
+      border-color: var(--accent-cyan);
+    }
+    
+    input:checked + .switch-slider:before {
+      transform: translateX(20px);
+      background-color: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    /* Telemetry Plots */
+    .telemetry-plots {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .chart-container {
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 12px;
+      position: relative;
+      flex-grow: 1;
+      min-height: 140px;
+    }
+
+    .chart-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .chart-canvas {
+      width: 100%;
+      height: calc(100% - 20px);
+      display: block;
+    }
+
+    /* Terminal Console */
+    .terminal-container {
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+    }
+
+    .terminal-body {
+      background-color: rgba(0, 0, 0, 0.25);
+      color: var(--accent-green);
+      font-family: 'Share Tech Mono', monospace;
+      padding: 18px;
+      overflow-y: auto;
+      flex-grow: 1;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .terminal-line {
+      margin-bottom: 5px;
+      white-space: pre-wrap;
+    }
+
+    .terminal-line .time {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .terminal-line .status-warn {
+      color: var(--accent-yellow);
+    }
+
+    .terminal-line .status-err {
+      color: var(--accent-orange);
+    }
+
+    .terminal-input-row {
+      display: flex;
+      background: rgba(0, 0, 0, 0.15);
+      align-items: center;
+      padding: 8px 18px;
+    }
+
+    .terminal-prompt {
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .terminal-input {
+      background: transparent;
+      border: none;
+      color: var(--accent-cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      flex-grow: 1;
+      outline: none;
+    }
+
+    .terminal-macro-bar {
+      padding: 8px 18px;
+      background-color: rgba(255, 255, 255, 0.01);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .macro-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: 'Share Tech Mono', monospace;
+      transition: all 0.2s ease;
+    }
+
+    .macro-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border-color: var(--glass-border-focus);
+    }
+
+    /* --- CATALOG --- */
+    .catalog-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .product-card {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--glass-shadow);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .product-img-slot {
+      height: 180px;
+      background-color: rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-schematic {
+      width: 70%;
+      height: 70%;
+      stroke: rgba(255, 255, 255, 0.4);
+      stroke-width: 1.2;
+      fill: none;
+      transition: all 0.5s ease;
+    }
+
+    .product-card:hover .product-schematic {
+      stroke: var(--accent-cyan);
+      transform: scale(1.05);
+    }
+
+    .product-card-body {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .product-model {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-orange);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .product-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .product-specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .spec-item-line {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 6px;
+      font-size: 0.8rem;
+    }
+
+    .spec-lbl {
+      color: var(--text-muted);
+    }
+
+    .spec-val {
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+    }
+
+    .product-card-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--glass-border);
+      background-color: rgba(255, 255, 255, 0.01);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* Comparison Table */
+    .specs-table-wrapper {
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 600px;
+    }
+
+    .specs-table th, .specs-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .specs-table th {
+      background-color: rgba(255, 255, 255, 0.02);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .specs-table tr:last-child th, .specs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .specs-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .specs-table td.highlight {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    /* --- TIMELINE --- */
+    .mission-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .timeline-container {
+      position: relative;
+      margin-top: 40px;
+    }
+
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 20px;
+      width: 2px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-node {
+      position: absolute;
+      left: 11px;
+      top: 4px;
+      width: 20px;
+      height: 20px;
+      background-color: var(--bg-color);
+      border: 2px solid var(--accent-orange);
+      border-radius: 50%;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item.active .timeline-node {
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .timeline-card {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--glass-shadow);
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .timeline-card:hover {
+      border-color: var(--glass-border-focus);
+      transform: translateY(-2px);
+    }
+
+    .timeline-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+    }
+
+    .mission-date {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--accent-orange);
+      font-weight: 700;
+    }
+
+    .mission-status {
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .mission-status.success {
+      color: var(--accent-green);
+    }
+
+    .mission-status.ongoing {
+      color: var(--accent-cyan);
+    }
+
+    .mission-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .mission-detail {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.3s ease;
+    }
+
+    .timeline-card.expanded .mission-detail {
+      max-height: 500px;
+      margin-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 15px;
+    }
+
+    .mission-telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .mission-telemetry-data {
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.01);
+      font-size: 0.75rem;
+    }
+
+    /* --- FORM SECTION --- */
+    .form-section {
+      padding: 80px 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .terminal-form-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--glass-shadow);
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--accent-orange);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
+    }
+
+    .form-control.mono {
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .checklist-panel {
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.01);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .checklist-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--accent-yellow);
+      letter-spacing: 0.5px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checklist-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      background-color: transparent;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checklist-item input {
+      display: none;
+    }
+
+    .checklist-item input:checked + .checklist-checkbox {
+      background-color: var(--accent-green);
+      border-color: var(--accent-green);
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+    }
+
+    .checklist-item input:checked + .checklist-checkbox::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 4px;
+      height: 8px;
+      border: solid #000;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .checklist-item-text {
+      flex-grow: 1;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
+    .btn-brutal.submit-btn {
+      width: 100%;
+      background-color: var(--accent-green);
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.15);
+      margin-top: 10px;
+      border-radius: 30px;
+    }
+
+    .btn-brutal.submit-btn:disabled {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+      border-color: transparent;
+    }
+
+    .transmission-console {
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      background-color: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-family: 'Share Tech Mono', monospace;
+      padding: 24px;
+      font-size: 0.85rem;
+      color: var(--accent-green);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      height: 100%;
+      position: relative;
+    }
+
+    .console-header-bar {
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      padding-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .console-progress-track {
+      height: 12px;
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.2);
+      position: relative;
+      display: none;
+    }
+
+    .console-progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+      transition: width 0.1s linear;
+    }
+
+    .transmission-logs {
+      overflow-y: auto;
+      max-height: 250px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--glass-border);
+      background-color: rgba(7, 7, 9, 0.9);
+      padding: 60px 0 40px;
+      font-size: 0.8rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .footer-title {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-list a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .system-health-block {
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.01);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .health-bar {
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .health-bar-fill {
+      width: 98.4%;
+      height: 100%;
+      background-color: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+
+    .controls-overlay {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      display: flex;
+      gap: 12px;
+    }
+
+    .overlay-btn {
+      width: 44px;
+      height: 44px;
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .overlay-btn:hover {
+      background-color: var(--glass-bg-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .overlay-btn.active {
+      background-color: var(--accent-orange);
+      color: #000;
+      box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Alert Banner / Marquee -->
+  <div class="alert-banner mono-font">
+    <div class="marquee-text">
+      SYSTEM STATUS: ACTIVE // MISSION CAPABLE // STOKES AUTOMATION COORDINATING PAYLOAD ORBIT L4 // SOLAR STORM PROBABILITY: 0.08% // ALL SENSORS FUNCTIONAL
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="wrapper header-grid">
+      <div class="brand-section">
+        <div class="brand-logo">S</div>
+        <div>
+          <h1 class="brand-title">STOKES</h1>
+          <span class="brand-subtitle mono-font">AUTOMATION DECK</span>
+        </div>
+      </div>
+      
+      <nav class="header-nav">
+        <a href="#control-room" class="nav-btn">Control Room</a>
+        <a href="#catalog" class="nav-btn">Systems Catalog</a>
+        <a href="#missions" class="nav-btn">Mission History</a>
+        <a href="#transmit" class="nav-btn">Transmit Uplink</a>
+      </nav>
+
+      <div class="header-status mono-font">
+        <div class="status-item">
+          <span class="status-indicator"></span>SYSTEM STATE: <span style="color: var(--accent-green);">ON</span>
+        </div>
+        <div class="status-item">
+          LAUNCH WINDOW: <span id="header-countdown" style="color: var(--accent-yellow);">T-MINUS 12m 45s</span>
+        </div>
+        <div class="status-item">
+          COORD: <span id="header-coords" style="color: var(--accent-cyan);">0.00° N, 0.00° E</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main class="wrapper">
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="agency-tag">Space Infrastructure Integration</span>
+        <h2 class="hero-title">
+          Automating the
+          <span>Next Cosmic</span>
+          Frontier.
+        </h2>
+        <p class="hero-description">
+          Stokes Automation designs, builds, and deploys high-integrity cybernetic telemetry pipelines and autonomous robotic grids for low-gravity, lunar, and orbital industrial zones. Built to withstand radiation, heavy thermal stress, and brutalist physical constraints.
+        </p>
+        <div class="hero-ctas">
+          <a href="#control-room" class="btn-brutal" id="hero-override-btn">Enter Control Room</a>
+          <a href="#catalog" class="btn-brutal secondary">Explore Catalog</a>
+        </div>
+      </div>
+
+      <!-- Orbital Trajectory Canvas Widget -->
+      <div class="hero-visualizer">
+        <div class="visualizer-overlay mono-font">
+          <span style="color: var(--accent-orange);">SYSTEM ST-90 // TRAJECTORY RENDER</span><br>
+          NODES TRACKED: 4 // ORBITAL SPEED: 7.67 KM/S<br>
+          UPLINK STABILITY: 99.4%
+        </div>
+        <canvas id="orbital-canvas" class="visualizer-canvas"></canvas>
+      </div>
+    </section>
+
+    <!-- TELEMETRY CONTROL ROOM (Dashboard Grid) -->
+    <section id="control-room" class="dashboard-section">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">Telemetry Control Room</h3>
+          <p style="color: var(--text-muted); margin-top: 5px;">Live feed from automated space stations and lunar robotic operations</p>
+        </div>
+        <div class="mono-font" style="font-size: 0.9rem; color: var(--accent-orange);">
+          REFRESH CYCLE: 33ms
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Node Activation Controls -->
+        <div class="brutal-panel">
+          <div class="panel-header">
+            <span>Systems Overview</span>
+            <span class="panel-header-badge mono-font">NODES: 4</span>
+          </div>
+          <div class="panel-body node-control">
+            <!-- Node 1 -->
+            <div class="node-item" id="node-panel-reactor">
+              <div class="node-info">
+                <span class="node-name">Fusion Core Reactor</span>
+                <span class="node-type mono-font">THERMAL ENERGY UPLINK</span>
+              </div>
+              <div class="node-status-indicator">
+                <span class="node-status-lbl mono-font" id="lbl-reactor">ACTIVE</span>
+                <label class="switch-container">
+                  <input type="checkbox" checked id="switch-reactor">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+            <!-- Node 2 -->
+            <div class="node-item" id="node-panel-arm">
+              <div class="node-info">
+                <span class="node-name">Robotic Manipulator</span>
+                <span class="node-type mono-font">S-100 PHYSICAL LOOPS</span>
+              </div>
+              <div class="node-status-indicator">
+                <span class="node-status-lbl mono-font" id="lbl-arm">ACTIVE</span>
+                <label class="switch-container">
+                  <input type="checkbox" checked id="switch-arm">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+            <!-- Node 3 -->
+            <div class="node-item" id="node-panel-solar">
+              <div class="node-info">
+                <span class="node-name">Solar Array Array-B</span>
+                <span class="node-type mono-font">PHOTOVOLTAIC INPUTS</span>
+              </div>
+              <div class="node-status-indicator">
+                <span class="node-status-lbl mono-font" id="lbl-solar">ACTIVE</span>
+                <label class="switch-container">
+                  <input type="checkbox" checked id="switch-solar">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+            <!-- Node 4 -->
+            <div class="node-item" id="node-panel-comms">
+              <div class="node-info">
+                <span class="node-name">Comms Signal Array</span>
+                <span class="node-type mono-font">DEEP-SPACE DISH UPLINK</span>
+              </div>
+              <div class="node-status-indicator">
+                <span class="node-status-lbl mono-font" id="lbl-comms">ACTIVE</span>
+                <label class="switch-container">
+                  <input type="checkbox" checked id="switch-comms">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Live Charts -->
+        <div class="brutal-panel">
+          <div class="panel-header">
+            <span>Telemetry Plots</span>
+            <span class="panel-header-badge mono-font" style="color: var(--accent-green);">LIVE FEED</span>
+          </div>
+          <div class="panel-body telemetry-plots">
+            <div class="chart-container">
+              <div class="chart-title mono-font">
+                <span>WAVEFORM: SYSTEM ENERGY RATIO</span>
+                <span id="txt-wave-val">100%</span>
+              </div>
+              <canvas id="energy-chart" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-container">
+              <div class="chart-title mono-font">
+                <span>PRESSURE LOG: HYDRAULIC PRESSURE (PSI)</span>
+                <span id="txt-press-val">3450 PSI</span>
+              </div>
+              <canvas id="pressure-chart" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Diagnostics Log Console -->
+        <div class="brutal-panel">
+          <div class="panel-header">
+            <span>Diagnostic Logs Console</span>
+            <span class="panel-header-badge mono-font" style="color: var(--accent-orange);">SECURE LINK</span>
+          </div>
+          <div class="terminal-container">
+            <div class="terminal-body" id="log-terminal">
+              <!-- Logs loaded via JS -->
+            </div>
+            
+            <div class="terminal-macro-bar">
+              <button class="macro-btn" data-cmd="system-check">Self Test</button>
+              <button class="macro-btn" data-cmd="clear">Clear Terminal</button>
+              <button class="macro-btn" data-cmd="dump-coords">Coordinates Dump</button>
+              <button class="macro-btn" data-cmd="signal-ping">Uplink Ping</button>
+            </div>
+
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">stokes@cosmic-deck:~$</span>
+              <input type="text" class="terminal-input" id="terminal-text-input" placeholder="Type command (try 'help', 'nodes', 'alert')..." autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT CATALOG (Automation Modules) -->
+    <section id="catalog" class="catalog-section">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">Systems Catalog</h3>
+          <p style="color: var(--text-muted); margin-top: 5px;">Stokes physical hardware modules built for extreme off-world environments</p>
+        </div>
+      </div>
+
+      <div class="catalog-grid">
+        <!-- Card 1 -->
+        <div class="product-card">
+          <div class="product-img-slot">
+            <!-- Schematic Robotic Arm -->
+            <svg class="product-schematic" viewBox="0 0 100 100">
+              <line x1="20" y1="80" x2="80" y2="80" />
+              <rect x="35" y="70" width="30" height="10" />
+              <line x1="50" y1="70" x2="40" y2="40" />
+              <circle cx="50" cy="70" r="3" fill="var(--glass-border)"/>
+              <line x1="40" y1="40" x2="70" y2="25" />
+              <circle cx="40" cy="40" r="3" fill="var(--glass-border)"/>
+              <polygon points="70,25 65,15 75,20" />
+              <circle cx="70" cy="25" r="3" fill="var(--glass-border)"/>
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <span class="product-model">MODULE ST-S100</span>
+            <h4 class="product-title">S-100 Robotic Manipulator</h4>
+            <p class="product-description">
+              A high-precision vacuum-rated robotic joint grid. Features custom torque-dense cybernetic motors capable of heavy structural handling on asteroid mining hubs.
+            </p>
+            <div class="product-specs-list">
+              <div class="spec-item-line">
+                <span class="spec-lbl">MAX REACH</span>
+                <span class="spec-val">4.8 METERS</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">LIFT LOAD (MICROGRAV)</span>
+                <span class="spec-val">12,500 KG</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">POWER REQUIREMENT</span>
+                <span class="spec-val">480V LITHIUM-CORE</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <span class="product-price mono-font">$142,500</span>
+            <a href="#transmit" class="btn-brutal" style="padding: 6px 12px; font-size: 0.8rem;">Quote Module</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="product-card">
+          <div class="product-img-slot">
+            <!-- Schematic Comms dish -->
+            <svg class="product-schematic" viewBox="0 0 100 100">
+              <line x1="50" y1="85" x2="50" y2="60" />
+              <line x1="30" y1="85" x2="70" y2="85" />
+              <path d="M 20,40 Q 50,75 80,40" />
+              <line x1="50" y1="58" x2="50" y2="25" />
+              <polygon points="50,20 47,28 53,28" />
+              <circle cx="50" cy="20" r="1.5" />
+              <path d="M 40,15 A 15,15 0 0,1 60,15" stroke-dasharray="3,3" />
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <span class="product-model">MODULE ST-Z30</span>
+            <h4 class="product-title">Zenith Telemetry Gateway</h4>
+            <p class="product-description">
+              Secure digital transceiver modules configured for radiation-hardened telemetry processing and laser-uplink relay grids across L-type orbits.
+            </p>
+            <div class="product-specs-list">
+              <div class="spec-item-line">
+                <span class="spec-lbl">DATA BANDWIDTH</span>
+                <span class="spec-val">10 GBPS SYMMETRIC</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">UPLINK FREQUENCY</span>
+                <span class="spec-val">KA-BAND / OPTICAL</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">ENCRYPTION ENGINES</span>
+                <span class="spec-val">QUANTUM-CRYPTO v3</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <span class="product-price mono-font">$89,000</span>
+            <a href="#transmit" class="btn-brutal" style="padding: 6px 12px; font-size: 0.8rem;">Quote Module</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="product-card">
+          <div class="product-img-slot">
+            <!-- Schematic Cargo Grid -->
+            <svg class="product-schematic" viewBox="0 0 100 100">
+              <rect x="20" y="30" width="60" height="40" stroke-dasharray="2,2"/>
+              <line x1="20" y1="50" x2="80" y2="50" />
+              <line x1="50" y1="30" x2="50" y2="70" />
+              <circle cx="35" cy="50" r="5" />
+              <circle cx="65" cy="50" r="5" />
+              <line x1="10" y1="50" x2="20" y2="50" />
+              <line x1="80" y1="50" x2="90" y2="50" />
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <span class="product-model">MODULE ST-T800</span>
+            <h4 class="product-title">Titan Heavy Cargo Grid</h4>
+            <p class="product-description">
+              Autonomous rail grids designed for Lunar dust containment and massive haul operations. Integrates magnetic couplers and auto-docking algorithms.
+            </p>
+            <div class="product-specs-list">
+              <div class="spec-item-line">
+                <span class="spec-lbl">LOAD STABILITY</span>
+                <span class="spec-val">99.98% MAG-LOCK</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">MAX INCLINATION</span>
+                <span class="spec-val">35 DEGREES LUNAR</span>
+              </div>
+              <div class="spec-item-line">
+                <span class="spec-lbl">DRIVE POWER</span>
+                <span class="spec-val">120KW REGEN INDUCTION</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-card-footer">
+            <span class="product-price mono-font">$310,000</span>
+            <a href="#transmit" class="btn-brutal" style="padding: 6px 12px; font-size: 0.8rem;">Quote Module</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Specifications Table -->
+      <h4 class="mono-font" style="font-size: 0.9rem; color: var(--accent-orange); margin-bottom: 20px;">// SYSTEM SPECIFICATION CROSS-REFERENCE MATRIX</h4>
+      <div class="specs-table-wrapper">
+        <table class="specs-table mono-font">
+          <thead>
+            <tr>
+              <th>Specification Parameter</th>
+              <th>ST-S100 (Manipulator)</th>
+              <th>ST-Z30 (Telemetry)</th>
+              <th>ST-T800 (Cargo Grid)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Structural Enclosure Class</td>
+              <td>Titanium-Grade Hardened</td>
+              <td>Carbon-Shielded Radiative</td>
+              <td>Reinforced High-Impact Steel</td>
+            </tr>
+            <tr>
+              <td>Operational Temp Tolerance</td>
+              <td>-180°C to +200°C</td>
+              <td>-150°C to +120°C</td>
+              <td>-220°C to +250°C</td>
+            </tr>
+            <tr>
+              <td>MTBF (Mean Time Between Failures)</td>
+              <td class="highlight">150,000 hrs</td>
+              <td class="highlight">220,000 hrs</td>
+              <td>120,000 hrs</td>
+            </tr>
+            <tr>
+              <td>Weight Class (Dry weight)</td>
+              <td>1,240 kg</td>
+              <td>45 kg</td>
+              <td>4,890 kg</td>
+            </tr>
+            <tr>
+              <td>Radiation Shielding Coeff</td>
+              <td>75 MeV Capable</td>
+              <td class="highlight">150 MeV Capable</td>
+              <td>60 MeV Capable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MISSION ARCHIVES TIMELINE -->
+    <section id="missions" class="mission-section">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">Mission History Archive</h3>
+          <p style="color: var(--text-muted); margin-top: 5px;">Active deployments and completed system integrations across the solar system</p>
+        </div>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Mission Item 1 -->
+        <div class="timeline-item active">
+          <div class="timeline-node"></div>
+          <div class="timeline-card expanded">
+            <div class="timeline-meta">
+              <span class="mission-date">LAUNCH DATE: 2026.04.18</span>
+              <span class="mission-status ongoing">ONGOING</span>
+            </div>
+            <h4 class="mission-title">Project Kepler Auto-Grid (Kepler-186 Array)</h4>
+            <p>Deploying 12 interconnected autonomous tracking dishes on Kepler station orbital ring to provide stable telemetry maps for interplanetary cargo vehicles.</p>
+            
+            <div class="mission-detail">
+              <p style="color: var(--accent-cyan); font-weight: 500;">CURRENT TELEMETRY SNAPSHOT:</p>
+              <div class="mission-telemetry-row mono-font">
+                <div class="mission-telemetry-data">
+                  <strong>DISH ALIGNMENT</strong><br>
+                  99.982% ACCURATE
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>LASER STABILITY</strong><br>
+                  COHERENT // 450mW
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>SYSTEM BUFFER</strong><br>
+                  0.02% OVERFILL
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Item 2 -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="mission-date">COMPLETION DATE: 2025.11.02</span>
+              <span class="mission-status success">SUCCESSFUL</span>
+            </div>
+            <h4 class="mission-title">L-4 Lunar Foundry System (Moon Base Alpha)</h4>
+            <p>Integrated six heavy S-100 manipulator systems into the primary lunar refinery, increasing autonomous ore transport throughput by 320%.</p>
+            
+            <div class="mission-detail">
+              <p style="color: var(--accent-green); font-weight: 500;">FINAL REPORT DIGEST:</p>
+              <p style="margin-top: 8px;">Total raw basalt processed: 140,000 Metric Tons. Mechanical failure rate reported over 6 months: 0.00%. Automated systems ran 24/7 through lunar night cycles using localized fuel cell power loops designed by Stokes.</p>
+              <div class="mission-telemetry-row mono-font">
+                <div class="mission-telemetry-data">
+                  <strong>REFUSE LOSS</strong><br>
+                  &lt;0.4% TOTAL
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>PUMP PRESSURE</strong><br>
+                  NOMINAL // 4200 PSI
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>FOUNDRY TEMP</strong><br>
+                  1640°C CONSTANT
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Item 3 -->
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="mission-date">COMPLETION DATE: 2024.08.14</span>
+              <span class="mission-status success">SUCCESSFUL</span>
+            </div>
+            <h4 class="mission-title">Ares Cargo Rail Automated Shuttle (Mars Orbit)</h4>
+            <p>Configured autonomous rail switching software and electromagnetic mag-locks on Mars Orbital Payload Platform to capture incoming solar sail cargo units.</p>
+            
+            <div class="mission-detail">
+              <p style="color: var(--accent-green); font-weight: 500;">MISSION ARCHIVE DIGEST:</p>
+              <p style="margin-top: 8px;">Docking automation software successfully intercepted 48 incoming payloads from Earth-Venus supply corridor. Real-time synchronization handled orbital drifts of up to 40m/s with absolute stabilization.</p>
+              <div class="mission-telemetry-row mono-font">
+                <div class="mission-telemetry-data">
+                  <strong>VELOCITY LOCK</strong><br>
+                  0.01m/s MARGIN
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>POWER DRAW</strong><br>
+                  80KW ACTIVE
+                </div>
+                <div class="mission-telemetry-data">
+                  <strong>CAPTURE INDEX</strong><br>
+                  48 / 48 SHUTTLES
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSMISSION TERMINAL (Form) -->
+    <section id="transmit" class="form-section">
+      <div class="section-header">
+        <div>
+          <h3 class="section-title">Transmission Terminal</h3>
+          <p style="color: var(--text-muted); margin-top: 5px;">Submit hardware queries or coordinate system architectures directly to Stokes engineers</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <!-- Terminal Form Panel -->
+        <div class="terminal-form-card">
+          <form id="launch-form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label class="form-label" for="form-name">1. Sender Identification / Name</label>
+              <input type="text" id="form-name" class="form-control" placeholder="e.g. CAPTAIN R. VANCE, COMMANDER" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-email">2. Telemetry Return Uplink / Email</label>
+              <input type="email" id="form-email" class="form-control mono" placeholder="commander@orbit.stokes.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-payload">3. System Inquiry Coordinates / Message</label>
+              <textarea id="form-payload" class="form-control" placeholder="Identify module requirements, orbital parameters, or system integration timelines..." required></textarea>
+            </div>
+
+            <!-- Pre-launch Checklist -->
+            <div class="checklist-panel">
+              <div class="checklist-title">
+                <span>PRE-LAUNCH AUTHORIZATION</span>
+                <span class="mono-font" style="font-size: 0.75rem;">SAFETY CODES REQUIRED</span>
+              </div>
+              
+              <label class="checklist-item">
+                <input type="checkbox" id="chk-review" required>
+                <span class="checklist-checkbox"></span>
+                <span class="checklist-item-text">I have reviewed my transmission payload specifications and confirm coordinate safety parameters.</span>
+              </label>
+
+              <label class="checklist-item">
+                <input type="checkbox" id="chk-auth" required>
+                <span class="checklist-checkbox"></span>
+                <span class="checklist-item-text">I authorize Stokes Automation to ping the return telemetry uplink domain provided above.</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-brutal submit-btn" id="submit-btn" disabled>Initiate Transmission Sequence</button>
+          </form>
+        </div>
+
+        <!-- Simulated Telemetry Signal Screen -->
+        <div class="transmission-console">
+          <div class="console-header-bar mono-font">
+            SIGNAL UPLINK TRANSMISSION CONSOLE
+          </div>
+          
+          <div class="console-progress-track" id="form-progress-bar">
+            <div class="console-progress-fill" id="form-progress-fill"></div>
+          </div>
+          
+          <div class="transmission-logs" id="form-transmission-logs">
+            <div style="color: var(--text-muted);">[WAITING] Awaiting payload initiation... Ensure validation checks are selected on the left panel to arm transmission.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrapper">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-section">
+            <div class="brand-logo">S</div>
+            <h4 class="footer-title">STOKES AUTOMATION</h4>
+          </div>
+          <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.75rem; margin-top: 10px;">
+            Deep-space infrastructure systems design. Built for high-radiation, zero-gravity automation vectors.
+          </p>
+        </div>
+        
+        <div class="footer-col">
+          <h5 class="footer-title">// SYSTEM NODES</h5>
+          <ul class="footer-list mono-font">
+            <li><a href="#control-room">Thermal Core Node</a></li>
+            <li><a href="#control-room">S-100 Manipulator</a></li>
+            <li><a href="#control-room">Solar Array B-Grid</a></li>
+            <li><a href="#control-room">High-Gain Comms Dish</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5 class="footer-title">// COORDINATES</h5>
+          <ul class="footer-list mono-font" style="color: var(--text-muted); font-size: 0.75rem;">
+            <li>HQ: LUNAR ORBIT, SECTOR 8</li>
+            <li>FOUNDRY: MARE IMBRIUM</li>
+            <li>COMMS: LAGRANGE POINT L2</li>
+            <li>TEL: +1 (800) COSMIC-ST</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="system-health-block">
+            <span class="mono-font" style="font-size: 0.7rem; font-weight: 700; color: var(--accent-green);">SYSTEM HEALTH: 98.4%</span>
+            <div class="health-bar">
+              <div class="health-bar-fill"></div>
+            </div>
+            <span class="mono-font" style="font-size: 0.65rem; color: var(--text-muted);">ALL SUBSYSTEMS REPORT NOMINAL RAD COEFF</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom mono-font">
+        <span>© 2026 STOKES AUTOMATION INC. CO-ORDINATING THE VOID.</span>
+        <span>LATENCY: <span id="footer-latency" style="color: var(--accent-green);">22ms</span> // SECURITY: LEVEL 4</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Controls overlay (Sound & Mode) -->
+  <div class="controls-overlay">
+    <button class="overlay-btn" id="sound-toggle-btn" title="Toggle System Audio Hum">🔊</button>
+    <button class="overlay-btn" id="back-to-top" title="Scroll Command Deck Top">▲</button>
+  </div>
+
+  <!-- JavaScript Telemetry + Interactivity -->
+  <script>
+    // --- AUDIO SYNTHESIS ENGINE (TACTILE MICRO-INTERACTIONS) ---
+    // Creates a physical control room synthesizer using Web Audio API (no external file dependencies).
+    let audioCtx = null;
+    let mainHumOsc = null;
+    let mainHumGain = null;
+    let soundEnabled = false;
+
+    function initAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Main Control Room Hum
+      mainHumOsc = audioCtx.createOscillator();
+      mainHumGain = audioCtx.createGain();
+      
+      mainHumOsc.type = 'sine';
+      mainHumOsc.frequency.setValueAtTime(60, audioCtx.currentTime); // Low 60Hz hum
+      
+      mainHumGain.gain.setValueAtTime(0.015, audioCtx.currentTime); // Very quiet hum
+      
+      mainHumOsc.connect(mainHumGain);
+      mainHumGain.connect(audioCtx.destination);
+      mainHumOsc.start();
+    }
+
+    function toggleSound() {
+      if (!audioCtx) {
+        initAudio();
+        soundEnabled = true;
+        document.getElementById('sound-toggle-btn').classList.add('active');
+        logToTerminal("SYSTEM: Control Room Audio Hum Synthesized (60Hz Sine).", "success");
+      } else {
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+          soundEnabled = true;
+          document.getElementById('sound-toggle-btn').classList.add('active');
+          document.getElementById('sound-toggle-btn').innerText = "🔊";
+        } else if (audioCtx.state === 'running' && soundEnabled) {
+          audioCtx.suspend();
+          soundEnabled = false;
+          document.getElementById('sound-toggle-btn').classList.remove('active');
+          document.getElementById('sound-toggle-btn').innerText = "🔇";
+        } else {
+          audioCtx.resume();
+          soundEnabled = true;
+          document.getElementById('sound-toggle-btn').classList.add('active');
+          document.getElementById('sound-toggle-btn').innerText = "🔊";
+        }
+      }
+    }
+
+    function playBeep(freq, type, duration, volume) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq || 880, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(volume || 0.05, audioCtx.currentTime);
+        
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.error("Audio error", e);
+      }
+    }
+
+    // Play click sound on all buttons
+    document.querySelectorAll('.btn-brutal, .nav-btn, .switch-container input, .checklist-item, .macro-btn, .overlay-btn').forEach(elem => {
+      elem.addEventListener('click', () => {
+        playBeep(1200, 'triangle', 0.08, 0.08);
+      });
+    });
+
+    document.getElementById('sound-toggle-btn').addEventListener('click', toggleSound);
+
+    // Back to top button
+    document.getElementById('back-to-top').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+
+    // --- HERO ORBITAL TRAJECTORY CANVAS ANIMATION ---
+    const orbitalCanvas = document.getElementById('orbital-canvas');
+    const orbitalCtx = orbitalCanvas.getContext('2d');
+    
+    function resizeOrbitalCanvas() {
+      orbitalCanvas.width = orbitalCanvas.parentElement.clientWidth;
+      orbitalCanvas.height = orbitalCanvas.parentElement.clientHeight;
+    }
+    resizeOrbitalCanvas();
+    window.addEventListener('resize', resizeOrbitalCanvas);
+
+    let angle1 = 0;
+    let angle2 = 0.5;
+    let angle3 = 1.2;
+    let mousePos = { x: 0, y: 0 };
+    let hoverActive = false;
+
+    orbitalCanvas.addEventListener('mousemove', (e) => {
+      const rect = orbitalCanvas.getBoundingClientRect();
+      mousePos.x = e.clientX - rect.left;
+      mousePos.y = e.clientY - rect.top;
+      hoverActive = true;
+    });
+
+    orbitalCanvas.addEventListener('mouseleave', () => {
+      hoverActive = false;
+    });
+
+    function drawOrbitalSystem() {
+      if (!orbitalCanvas || !orbitalCtx) return;
+      
+      const width = orbitalCanvas.width;
+      const height = orbitalCanvas.height;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      
+      orbitalCtx.clearRect(0, 0, width, height);
+      
+      // Draw grid lines inside the visualizer
+      orbitalCtx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+      orbitalCtx.lineWidth = 1;
+      for (let x = 0; x < width; x += 40) {
+        orbitalCtx.beginPath();
+        orbitalCtx.moveTo(x, 0);
+        orbitalCtx.lineTo(x, height);
+        orbitalCtx.stroke();
+      }
+      for (let y = 0; y < height; y += 40) {
+        orbitalCtx.beginPath();
+        orbitalCtx.moveTo(0, y);
+        orbitalCtx.lineTo(width, y);
+        orbitalCtx.stroke();
+      }
+
+      // Draw Center Sun/Core
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(centerX, centerY, 12, 0, Math.PI * 2);
+      orbitalCtx.fillStyle = 'var(--accent-orange)';
+      orbitalCtx.fill();
+      orbitalCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      orbitalCtx.lineWidth = 1;
+      orbitalCtx.stroke();
+
+      // Cosmic crosshairs on center
+      orbitalCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      orbitalCtx.beginPath();
+      orbitalCtx.moveTo(centerX - 40, centerY);
+      orbitalCtx.lineTo(centerX + 40, centerY);
+      orbitalCtx.moveTo(centerX, centerY - 40);
+      orbitalCtx.lineTo(centerX, centerY + 40);
+      orbitalCtx.stroke();
+
+      // Orbit 1: Telecom Satellite
+      const radius1 = 60;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(centerX, centerY, radius1, 0, Math.PI * 2);
+      orbitalCtx.strokeStyle = 'rgba(0, 210, 255, 0.08)';
+      orbitalCtx.setLineDash([4, 6]);
+      orbitalCtx.stroke();
+      orbitalCtx.setLineDash([]);
+      
+      const sat1X = centerX + Math.cos(angle1) * radius1;
+      const sat1Y = centerY + Math.sin(angle1) * radius1;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(sat1X, sat1Y, 4, 0, Math.PI * 2);
+      orbitalCtx.fillStyle = 'var(--accent-cyan)';
+      orbitalCtx.fill();
+
+      // Orbit 2: Space Arm Assembly Grid
+      const radius2 = 100;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(centerX, centerY, radius2, 0, Math.PI * 2);
+      orbitalCtx.strokeStyle = 'rgba(46, 204, 113, 0.08)';
+      orbitalCtx.stroke();
+      
+      const sat2X = centerX + Math.cos(angle2) * radius2;
+      const sat2Y = centerY + Math.sin(angle2) * radius2;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(sat2X, sat2Y, 4, 0, Math.PI * 2);
+      orbitalCtx.fillStyle = 'var(--accent-green)';
+      orbitalCtx.fill();
+
+      // Orbit 3: Heavy Cargo Payload (Solar Array Powered)
+      const radius3 = 140;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(centerX, centerY, radius3, 0, Math.PI * 2);
+      orbitalCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      orbitalCtx.stroke();
+      
+      const sat3X = centerX + Math.cos(angle3) * radius3;
+      const sat3Y = centerY + Math.sin(angle3) * radius3;
+      orbitalCtx.beginPath();
+      orbitalCtx.arc(sat3X, sat3Y, 5, 0, Math.PI * 2);
+      orbitalCtx.fillStyle = 'var(--accent-yellow)';
+      orbitalCtx.fill();
+
+      // Draw connection vectors if mouse hovers
+      if (hoverActive) {
+        orbitalCtx.strokeStyle = 'rgba(0, 210, 255, 0.15)';
+        orbitalCtx.lineWidth = 1;
+        orbitalCtx.setLineDash([2, 4]);
+        
+        orbitalCtx.beginPath();
+        orbitalCtx.moveTo(mousePos.x, mousePos.y);
+        orbitalCtx.lineTo(sat1X, sat1Y);
+        orbitalCtx.moveTo(mousePos.x, mousePos.y);
+        orbitalCtx.lineTo(sat2X, sat2Y);
+        orbitalCtx.moveTo(mousePos.x, mousePos.y);
+        orbitalCtx.lineTo(sat3X, sat3Y);
+        orbitalCtx.stroke();
+        orbitalCtx.setLineDash([]);
+
+        // Interactive HUD text
+        orbitalCtx.fillStyle = 'var(--accent-cyan)';
+        orbitalCtx.font = '10px "Share Tech Mono"';
+        orbitalCtx.fillText(`LOCK: [${Math.round(mousePos.x)}, ${Math.round(mousePos.y)}]`, mousePos.x + 10, mousePos.y - 10);
+      }
+
+      // Update angles for speeds
+      angle1 += 0.005;
+      angle2 -= 0.003;
+      angle3 += 0.002;
+      
+      requestAnimationFrame(drawOrbitalSystem);
+    }
+    drawOrbitalSystem();
+
+
+    // --- DYNAMIC TELEMETRY CHARTS ---
+    const energyCanvas = document.getElementById('energy-chart');
+    const energyCtx = energyCanvas.getContext('2d');
+    const pressureCanvas = document.getElementById('pressure-chart');
+    const pressureCtx = pressureCanvas.getContext('2d');
+
+    let energyData = Array(50).fill(50);
+    let pressureData = Array(40).fill(3450);
+    let chartTime = 0;
+
+    function resizeTelemetryCanvas() {
+      energyCanvas.width = energyCanvas.parentElement.clientWidth;
+      energyCanvas.height = energyCanvas.parentElement.clientHeight - 20;
+      
+      pressureCanvas.width = pressureCanvas.parentElement.clientWidth;
+      pressureCanvas.height = pressureCanvas.parentElement.clientHeight - 20;
+    }
+    resizeTelemetryCanvas();
+    window.addEventListener('resize', resizeTelemetryCanvas);
+
+    function updateTelemetryData() {
+      chartTime += 0.1;
+      
+      // Node modifier calculations based on switch states
+      let energyModifier = 1.0;
+      let pressureModifier = 1.0;
+      
+      if (!document.getElementById('switch-reactor').checked) energyModifier -= 0.6;
+      if (!document.getElementById('switch-solar').checked) energyModifier -= 0.3;
+      if (!document.getElementById('switch-arm').checked) pressureModifier -= 0.5;
+      if (!document.getElementById('switch-comms').checked) energyModifier -= 0.1;
+
+      // Calculate new values with simulated noise
+      let targetEnergy = (50 + Math.sin(chartTime) * 35) * energyModifier;
+      targetEnergy += (Math.random() - 0.5) * 5; // Add noise
+      if (targetEnergy < 0) targetEnergy = 0;
+      if (targetEnergy > 100) targetEnergy = 100;
+      
+      energyData.push(targetEnergy);
+      energyData.shift();
+
+      let targetPressure = (3400 + Math.sin(chartTime * 0.7) * 400 + Math.cos(chartTime * 1.5) * 200) * pressureModifier;
+      targetPressure += (Math.random() - 0.5) * 60;
+      if (targetPressure < 0) targetPressure = 0;
+      
+      pressureData.push(targetPressure);
+      pressureData.shift();
+
+      // Display numeric reads
+      document.getElementById('txt-wave-val').innerText = `${Math.round(targetEnergy)}% CAP`;
+      document.getElementById('txt-press-val').innerText = `${Math.round(targetPressure)} PSI`;
+      
+      // Visual updates if critical levels
+      const nodeReactor = document.getElementById('node-panel-reactor');
+      if (targetEnergy > 82 && document.getElementById('switch-reactor').checked) {
+        nodeReactor.style.borderColor = 'rgba(255, 167, 38, 0.4)';
+        document.getElementById('lbl-reactor').innerText = "ALERT_TEMP";
+        document.getElementById('lbl-reactor').style.color = "var(--accent-orange)";
+        
+        // Output periodic warnings to terminal
+        if (Math.random() < 0.05) {
+          logToTerminal("[WARNING] Fusion Core thermal output at maximum capacity limits.", "warn");
+          playBeep(660, 'square', 0.15, 0.03);
+        }
+      } else if (document.getElementById('switch-reactor').checked) {
+        nodeReactor.style.borderColor = '';
+        document.getElementById('lbl-reactor').innerText = "ACTIVE";
+        document.getElementById('lbl-reactor').style.color = "";
+      }
+    }
+
+    function drawCharts() {
+      // 1. Draw Energy Waveform Chart
+      const eW = energyCanvas.width;
+      const eH = energyCanvas.height;
+      energyCtx.clearRect(0, 0, eW, eH);
+      
+      // Draw grid
+      energyCtx.strokeStyle = 'rgba(255, 255, 255, 0.015)';
+      energyCtx.lineWidth = 1;
+      for (let x = 0; x < eW; x += 30) {
+        energyCtx.beginPath(); energyCtx.moveTo(x, 0); energyCtx.lineTo(x, eH); energyCtx.stroke();
+      }
+      for (let y = 0; y < eH; y += 25) {
+        energyCtx.beginPath(); energyCtx.moveTo(0, y); energyCtx.lineTo(eW, y); energyCtx.stroke();
+      }
+
+      // Plot data
+      energyCtx.strokeStyle = 'var(--accent-cyan)';
+      energyCtx.lineWidth = 1.8;
+      energyCtx.beginPath();
+      
+      const stepX = eW / (energyData.length - 1);
+      for (let i = 0; i < energyData.length; i++) {
+        const x = i * stepX;
+        const y = eH - (energyData[i] / 100) * (eH - 10) - 5;
+        if (i === 0) energyCtx.moveTo(x, y);
+        else energyCtx.lineTo(x, y);
+      }
+      energyCtx.stroke();
+
+      // Shaded area
+      energyCtx.lineTo(eW, eH);
+      energyCtx.lineTo(0, eH);
+      energyCtx.fillStyle = 'rgba(0, 210, 255, 0.03)';
+      energyCtx.fill();
+
+      // 2. Draw Pressure Line Chart
+      const pW = pressureCanvas.width;
+      const pH = pressureCanvas.height;
+      pressureCtx.clearRect(0, 0, pW, pH);
+
+      // Draw grid
+      pressureCtx.strokeStyle = 'rgba(255, 255, 255, 0.015)';
+      pressureCtx.lineWidth = 1;
+      for (let x = 0; x < pW; x += 30) {
+        pressureCtx.beginPath(); pressureCtx.moveTo(x, 0); pressureCtx.lineTo(x, pH); pressureCtx.stroke();
+      }
+      for (let y = 0; y < pH; y += 25) {
+        pressureCtx.beginPath(); pressureCtx.moveTo(0, y); pressureCtx.lineTo(pW, y); pressureCtx.stroke();
+      }
+
+      // Plot data
+      pressureCtx.strokeStyle = 'var(--accent-green)';
+      pressureCtx.lineWidth = 1.8;
+      pressureCtx.beginPath();
+
+      const stepXP = pW / (pressureData.length - 1);
+      const maxPSI = 4500;
+      for (let i = 0; i < pressureData.length; i++) {
+        const x = i * stepXP;
+        const y = pH - (pressureData[i] / maxPSI) * (pH - 10) - 5;
+        if (i === 0) pressureCtx.moveTo(x, y);
+        else pressureCtx.lineTo(x, y);
+      }
+      pressureCtx.stroke();
+
+      // Shaded area
+      pressureCtx.lineTo(pW, pH);
+      pressureCtx.lineTo(0, pH);
+      pressureCtx.fillStyle = 'rgba(46, 204, 113, 0.03)';
+      pressureCtx.fill();
+    }
+
+    // Run Telemetry Loop
+    setInterval(() => {
+      updateTelemetryData();
+      drawCharts();
+    }, 150);
+
+
+    // --- DIAGNOSTIC LOGS TERMINAL ---
+    const logTerminal = document.getElementById('log-terminal');
+    const termInput = document.getElementById('terminal-text-input');
+    
+    function logToTerminal(message, type) {
+      const timeStr = new Date().toISOString().slice(11, 19);
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      
+      let typeClass = '';
+      if (type === 'warn') typeClass = 'status-warn';
+      else if (type === 'error') typeClass = 'status-err';
+      else if (type === 'success') typeClass = 'status-success';
+      
+      let textContent = `<span class="time">[${timeStr}]</span> `;
+      if (type === 'input') {
+        textContent += `<span style="color: var(--accent-cyan)">stokes@cosmic-deck:~$ ${escapeHtml(message)}</span>`;
+      } else {
+        textContent += `<span class="${typeClass}">${escapeHtml(message)}</span>`;
+      }
+      
+      line.innerHTML = textContent;
+      logTerminal.appendChild(line);
+      logTerminal.scrollTop = logTerminal.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Default Log Entries
+    logToTerminal("STOKES CORE SECURITY KERNEL v8.4.1 initialized.", "success");
+    logToTerminal("Connecting securely to orbital gateway: L-4 Moon Base Array...", "normal");
+    logToTerminal("CONNECTION ESTABLISHED // Handshake: 256-bit AES Elliptic.", "success");
+    logToTerminal("Subsystems Online. Ready for telemetric oversight.", "normal");
+
+    // Handle user inputs
+    termInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmdText = termInput.value.trim();
+        termInput.value = '';
+        if (!cmdText) return;
+        
+        logToTerminal(cmdText, 'input');
+        executeTerminalCommand(cmdText);
+      }
+    });
+
+    // Handle macros buttons
+    document.querySelectorAll('.macro-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cmd = btn.getAttribute('data-cmd');
+        logToTerminal(cmd, 'input');
+        executeTerminalCommand(cmd);
+      });
+    });
+
+    function executeTerminalCommand(cmdLine) {
+      const parts = cmdLine.split(' ');
+      const mainCmd = parts[0].toLowerCase();
+      
+      switch (mainCmd) {
+        case 'help':
+          logToTerminal("Available Terminal Vectors:\n" +
+            "  help          - Display this commands matrix\n" +
+            "  nodes         - Query status of current active telemetry nodes\n" +
+            "  alert         - Sound simulated alarm and display telemetry error\n" +
+            "  signal-ping   - Measure latency to lunar transit dish\n" +
+            "  dump-coords   - Output system navigation coordinates\n" +
+            "  system-check  - Perform full network diagnostics override\n" +
+            "  clear         - Clear terminal stdout history", "normal");
+          break;
+          
+        case 'nodes':
+          const rState = document.getElementById('switch-reactor').checked ? "ACTIVE" : "OFFLINE";
+          const aState = document.getElementById('switch-arm').checked ? "ACTIVE" : "OFFLINE";
+          const sState = document.getElementById('switch-solar').checked ? "ACTIVE" : "OFFLINE";
+          const cState = document.getElementById('switch-comms').checked ? "ACTIVE" : "OFFLINE";
+          
+          logToTerminal(`[SYSTEM QUERY] Telemetry nodes check status:\n` +
+            `  - FUSION CORE REACTOR:   [${rState}]\n` +
+            `  - ROBOTIC MANIPULATOR:  [${aState}]\n` +
+            `  - SOLAR ARRAY B-GRID:  [${sState}]\n` +
+            `  - DEEP-SPACE DISH COMMS: [${cState}]`, "success");
+          break;
+          
+        case 'alert':
+          logToTerminal("[ALERT INITIALIZED] Simulating radiation warning alert event...", "error");
+          playBeep(440, 'sawtooth', 0.5, 0.08);
+          setTimeout(() => { playBeep(440, 'sawtooth', 0.5, 0.08); }, 600);
+          break;
+          
+        case 'signal-ping':
+          logToTerminal("PING moon.base.l4.stokes.net [182.16.89.2]...", "normal");
+          setTimeout(() => {
+            const lat = Math.round(15 + Math.random() * 20);
+            logToTerminal(`64 bytes from 182.16.89.2: icmp_seq=1 time=${lat} ms`, "success");
+            document.getElementById('footer-latency').innerText = `${lat}ms`;
+          }, 400);
+          break;
+          
+        case 'dump-coords':
+          const latVal = (Math.random() * 180 - 90).toFixed(4);
+          const lngVal = (Math.random() * 360 - 180).toFixed(4);
+          logToTerminal(`NAV: COORDINATES LOCK DETECTED -> LAT: ${latVal}° N // LNG: ${lngVal}° E`, "success");
+          document.getElementById('header-coords').innerText = `${latVal}° N, ${lngVal}° E`;
+          break;
+          
+        case 'system-check':
+          logToTerminal("INITIATING SUBSYSTEM SELF TEST PROCEDURES...", "warn");
+          setTimeout(() => { logToTerminal("  - Checking cooling pipeline loop pressure... NOMINAL", "success"); }, 200);
+          setTimeout(() => { logToTerminal("  - Scanning solar grid arrays... NO DEGRADATION DETECTED", "success"); }, 400);
+          setTimeout(() => { logToTerminal("  - Measuring telemetry gateway error ratios... 0.0031% (NOMINAL)", "success"); }, 600);
+          setTimeout(() => { logToTerminal("DIAGNOSTICS COMPLETED. Core systems functional.", "success"); }, 850);
+          break;
+          
+        case 'clear':
+          logTerminal.innerHTML = '';
+          break;
+          
+        default:
+          logToTerminal(`Command vector '${escapeHtml(mainCmd)}' not found in core binary paths. Type 'help' for support.`, "error");
+          break;
+      }
+    }
+
+
+    // --- REACTIVE NODE CONTROL PANEL ---
+    function setupNodeSwitch(switchId, labelId, nodePanelId, systemName) {
+      const checkbox = document.getElementById(switchId);
+      const label = document.getElementById(labelId);
+      const panel = document.getElementById(nodePanelId);
+      
+      checkbox.addEventListener('change', () => {
+        const state = checkbox.checked;
+        if (state) {
+          label.innerText = "ACTIVE";
+          label.style.color = "";
+          panel.querySelector('.node-status-dot').classList.remove('offline');
+          logToTerminal(`SYSTEM: Node [${systemName}] telemetry pipeline connected. State: ONLINE.`, "success");
+          playBeep(980, 'sine', 0.1, 0.05);
+        } else {
+          label.innerText = "OFFLINE";
+          label.style.color = "var(--text-muted)";
+          panel.querySelector('.node-status-dot').classList.add('offline');
+          logToTerminal(`WARNING: Node [${systemName}] telemetry pipeline severed manually. State: OFFLINE.`, "warn");
+          playBeep(420, 'sine', 0.2, 0.05);
+        }
+      });
+    }
+
+    setupNodeSwitch('switch-reactor', 'lbl-reactor', 'node-panel-reactor', 'Fusion Core Reactor');
+    setupNodeSwitch('switch-arm', 'lbl-arm', 'node-panel-arm', 'Robotic Manipulator S-100');
+    setupNodeSwitch('switch-solar', 'lbl-solar', 'node-panel-solar', 'Solar Array Array-B');
+    setupNodeSwitch('switch-comms', 'lbl-comms', 'node-panel-comms', 'Comms Signal Array');
+
+
+    // --- ACCORDION INTERACTIVITY (MISSION TIMELINE) ---
+    document.querySelectorAll('.timeline-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.mission-detail')) return;
+        
+        const isExpanded = card.classList.contains('expanded');
+        
+        // Collapse all others
+        document.querySelectorAll('.timeline-card').forEach(c => {
+          c.classList.remove('expanded');
+          c.closest('.timeline-item').classList.remove('active');
+        });
+        
+        if (!isExpanded) {
+          card.classList.add('expanded');
+          card.closest('.timeline-item').classList.add('active');
+          playBeep(880, 'triangle', 0.1, 0.05);
+        } else {
+          playBeep(520, 'triangle', 0.1, 0.05);
+        }
+      });
+    });
+
+
+    // --- TRANSMISSION LAUNCH CONSOLE & CHECKLIST FORM ---
+    const submitBtn = document.getElementById('submit-btn');
+    const chkReview = document.getElementById('chk-review');
+    const chkAuth = document.getElementById('chk-auth');
+    const launchForm = document.getElementById('launch-form');
+    
+    const progressTrack = document.getElementById('form-progress-bar');
+    const progressFill = document.getElementById('form-progress-fill');
+    const transmitLogs = document.getElementById('form-transmission-logs');
+
+    function checkFormStatus() {
+      if (chkReview.checked && chkAuth.checked) {
+        submitBtn.removeAttribute('disabled');
+        transmitLogs.innerHTML = `<div style="color: var(--accent-yellow);">[READY] Pre-launch checklists validated. Payload armed. Ready to initiate sequence.</div>`;
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+        transmitLogs.innerHTML = `<div style="color: var(--text-muted);">[WAITING] Awaiting payload initiation... Ensure validation checks are selected on the left panel to arm transmission.</div>`;
+      }
+    }
+
+    chkReview.addEventListener('change', checkFormStatus);
+    chkAuth.addEventListener('change', checkFormStatus);
+
+    launchForm.addEventListener('submit', () => {
+      // Block multiple submissions
+      submitBtn.setAttribute('disabled', 'true');
+      chkReview.setAttribute('disabled', 'true');
+      chkAuth.setAttribute('disabled', 'true');
+      
+      const sName = document.getElementById('form-name').value.toUpperCase();
+      const sEmail = document.getElementById('form-email').value;
+      const sPayload = document.getElementById('form-payload').value;
+      
+      progressTrack.style.display = 'block';
+      transmitLogs.innerHTML = '';
+      
+      logTransmit("ARMING TRANSMIT CARRIER WAVE...", "warn");
+      playBeep(440, 'sine', 0.2, 0.08);
+
+      let pct = 0;
+      const interval = setInterval(() => {
+        pct += 2;
+        progressFill.style.width = pct + '%';
+        
+        if (pct === 20) {
+          logTransmit(`CONSTRUCTING METADATA HEADER BLOCK // SENDER: ${sName}...`, "info");
+          playBeep(880, 'sine', 0.05, 0.02);
+        }
+        if (pct === 46) {
+          logTransmit(`PACKETIZING SENSOR CONSOLE PAYLOAD (${sPayload.length} bytes)...`, "info");
+          playBeep(1200, 'sine', 0.05, 0.02);
+        }
+        if (pct === 72) {
+          logTransmit(`ESTABLISHING CARRIER SYNCHRONIZATION WITH Moon Base Alpha...`, "warn");
+          playBeep(880, 'sawtooth', 0.05, 0.03);
+        }
+        if (pct === 90) {
+          logTransmit("BROADCASTING ENCRYPTED PAYLOAD ON 8.41 GHz...", "warn");
+          playBeep(1500, 'sine', 0.1, 0.05);
+        }
+        if (pct >= 100) {
+          clearInterval(interval);
+          logTransmit(`[SUCCESS] BROADCAST COMPLETE. STOKES GATEWAY RECEIVED HANDSHAKE.`, "success");
+          logTransmit(`DISPATCHED SECURE TOKEN ID: ST-${Math.floor(100000 + Math.random()*900000)}`, "success");
+          playBeep(2000, 'sine', 0.4, 0.1);
+          
+          // Clear inputs
+          document.getElementById('form-name').value = '';
+          document.getElementById('form-email').value = '';
+          document.getElementById('form-payload').value = '';
+          
+          // Re-enable form elements after timeout
+          setTimeout(() => {
+            chkReview.checked = false;
+            chkAuth.checked = false;
+            chkReview.removeAttribute('disabled');
+            chkAuth.removeAttribute('disabled');
+            progressTrack.style.display = 'none';
+            progressFill.style.width = '0%';
+            checkFormStatus();
+          }, 5000);
+        }
+      }, 80);
+    });
+
+    function logTransmit(msg, state) {
+      const line = document.createElement('div');
+      if (state === 'success') {
+        line.style.color = 'var(--accent-green)';
+        line.style.fontWeight = '700';
+      } else if (state === 'warn') {
+        line.style.color = 'var(--accent-orange)';
+      } else if (state === 'info') {
+        line.style.color = 'var(--accent-cyan)';
+      }
+      line.innerText = `[${new Date().toISOString().slice(11, 19)}] ${msg}`;
+      transmitLogs.appendChild(line);
+      transmitLogs.scrollTop = transmitLogs.scrollHeight;
+    }
+
+    // Dynamic header navigation active class update on scroll
+    const sections = document.querySelectorAll('section');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+      navButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('href').substring(1) === current) {
+          btn.classList.add('active');
+        }
+      });
+    });
+
+    // Countdown Timer in Header
+    let countdownTime = 765; // 12m 45s in seconds
+    const countdownEl = document.getElementById('header-countdown');
+    if (countdownEl) {
+      setInterval(() => {
+        countdownTime--;
+        if (countdownTime < 0) {
+          countdownTime = 900; // Reset to 15m
+          logToTerminal("SYSTEM: Orbit sync window window updated. Next slot configured.", "info");
+        }
+        const mins = Math.floor(countdownTime / 60);
+        const secs = countdownTime % 60;
+        countdownEl.innerText = `T-MINUS ${mins}m ${secs.toString().padStart(2, '0')}s`;
+      }, 1000);
+    }
+
+    // Randomize telemetry latency in footer periodically
+    setInterval(() => {
+      if (Math.random() < 0.2) {
+        const latency = Math.round(15 + Math.random() * 15);
+        document.getElementById('footer-latency').innerText = `${latency}ms`;
+      }
+    }, 4000);
+  </script>
+</body>
+</html>
